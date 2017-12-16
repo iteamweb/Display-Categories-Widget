@@ -36,6 +36,8 @@ class DisplayCategoriesWidget extends WP_Widget
         $display_empty_categories = $instance['display_empty_categories'];
         $showcount_value = $instance['showcount_value'];
         $use_desc_for_title = $instance['use_desc_for_title'];
+        $sort_order_by = $instance['sort_order_by'];
+        $sort_order_as = $instance['sort_order_as'];
         $show_format = $instance['show_format'];
         $dcw_column = $instance['dcw_column'];
 
@@ -134,6 +136,20 @@ n - Value of n (some number) specifies the depth (or level) to descend in displa
         if (esc_attr($use_desc_for_title) == 1) echo "checked"; ?> />Yes &nbsp; <input name="<?php
         echo $this->get_field_name('use_desc_for_title'); ?>" type="radio" value="0"  <?php
         if (esc_attr($use_desc_for_title) == 0) echo "checked"; ?>/>No </p> 
+<p><?php
+        _e('Order by:'); ?> <br /><input name="<?php
+        echo $this->get_field_name('sort_order_by'); ?>" type="radio" value="name" <?php
+        if (esc_attr($sort_order_by) == 'name') echo "checked"; ?> />Name &nbsp; <input name="<?php
+        echo $this->get_field_name('sort_order_by'); ?>" type="radio" value="id"  <?php
+        if (esc_attr($sort_order_by) == 'id') echo "checked"; ?>/>Id &nbsp; <input name="<?php
+        echo $this->get_field_name('sort_order_by'); ?>" type="radio" value="count"  <?php
+        if (esc_attr($sort_order_by) == 'count') echo "checked"; ?>/>Count </p> 
+<p><?php
+        _e('Sort Order ASC/DESC:'); ?> <br /><input name="<?php
+        echo $this->get_field_name('sort_order_as'); ?>" type="radio" value="ASC" <?php
+        if (esc_attr($sort_order_as) == 'ASC') echo "checked"; ?> />ASC &nbsp; <input name="<?php
+        echo $this->get_field_name('sort_order_as'); ?>" type="radio" value="DESC"  <?php
+        if (esc_attr($sort_order_as) == 'DESC') echo "checked"; ?>/>DESC </p> 
 <p>
                 <label for="<?php
         echo $this->get_field_id('dcw_column'); ?>">
@@ -170,6 +186,8 @@ n - Value of n (some number) specifies the depth (or level) to descend in displa
         $instance['display_empty_categories'] = $new_instance['display_empty_categories'];
         $instance['showcount_value'] = $new_instance['showcount_value'];
         $instance['use_desc_for_title'] = $new_instance['use_desc_for_title'];
+        $instance['sort_order_by'] = $new_instance['sort_order_by'];
+        $instance['sort_order_as'] = $new_instance['sort_order_as'];
         $instance['show_format'] = $new_instance['show_format'];
         $instance['dcw_column'] = $new_instance['dcw_column'];
         return $instance;
@@ -187,7 +205,9 @@ n - Value of n (some number) specifies the depth (or level) to descend in displa
         $dcw_depth = $instance['dcw_depth'];
         $display_empty_categories = $instance['display_empty_categories'];
         $showcount_value = $instance['showcount_value'];
-        $use_desc_for_title = $instance['use_desc_for_title'];        
+        $use_desc_for_title = $instance['use_desc_for_title'];
+        $sort_order_by = $instance['sort_order_by']; 
+        $sort_order_as = $instance['sort_order_as']; 
         $show_format = $instance['show_format'];
         $dcw_column = $instance['dcw_column'];
         if (!empty($title)) echo $before_title . $title . $after_title;
@@ -202,7 +222,7 @@ n - Value of n (some number) specifies the depth (or level) to descend in displa
         if ($instance['show_format'] == 0) {
             echo "<style>.dcw_c1 {float:left; width:100%} .dcw_c2 {float:left; width:50%} .dcw_c3 {float:left; width:33%}</style>";
             echo "<ul class='dcw'>";
-            wp_list_categories('orderby=name&use_desc_for_title='.$use_desc_for_title.'&show_count=' . $showcount_value . '&child_of=' . $cat_id . '&hide_empty=' . $display_empty_categories . '&title_li=&number=' . $dcw_limit . '&exclude=' . $dcw_exclude . '&depth=' . $dcw_depth);
+            wp_list_categories('orderby='.$sort_order_by.'&order='.$sort_order_as.'&use_desc_for_title='.$use_desc_for_title.'&show_count=' . $showcount_value . '&child_of=' . $cat_id . '&hide_empty=' . $display_empty_categories . '&title_li=&number=' . $dcw_limit . '&exclude=' . $dcw_exclude . '&depth=' . $dcw_depth);
             echo "</ul>";
             $class_definer = "dcw_c" . $instance['dcw_column'];
             echo "<script>jQuery('ul.dcw').find('li').addClass('$class_definer');</script>";
@@ -215,7 +235,7 @@ n - Value of n (some number) specifies the depth (or level) to descend in displa
             bloginfo('url'); ?>" method="get">
     <div>
     <?php
-            wp_dropdown_categories('name=cat' . $dcw_disp_widget_id . '&show_option_none=' . $dcw_option_name . '&orderby=name&hierarchical=1&show_count=' . $showcount_value . '&child_of=' . $cat_id . '&hide_empty=' . $display_empty_categories . '&title_li=&number=' . $dcw_limit . '&exclude=' . $dcw_exclude . '&depth=' . $dcw_depth); ?>
+            wp_dropdown_categories('orderby='.$sort_order_by.'&order='.$sort_order_as.'&name=cat' . $dcw_disp_widget_id . '&show_option_none=' . $dcw_option_name . '&hierarchical=1&show_count=' . $showcount_value . '&child_of=' . $cat_id . '&hide_empty=' . $display_empty_categories . '&title_li=&number=' . $dcw_limit . '&exclude=' . $dcw_exclude . '&depth=' . $dcw_depth); ?>
     <script type="text/javascript">
         <!--
         var dropdown<?php

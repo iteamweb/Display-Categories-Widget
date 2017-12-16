@@ -3,7 +3,7 @@ Contributors: iteamweb
 Donate link: 
 Tags: categories, widget, list categories, hide categories, select categories, level, Post categories, Categories display, categories widget, categories drop down
 Requires at least: 4.0
-Tested up to: 4.8.3
+Tested up to: 4.9.1
 Stable tag: 2.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -14,13 +14,26 @@ Display Categories Widget will display Child categories on your sidebar. Can be 
 
 Display Categories Widget will display Child categories on your sidebar. Can be placed on widget in sidebar.
 
-Features:
+**Development**
+
+Our development is being tracked on [GitHub URL](https://github.com/iteamweb/Display-Categories-Widget). Please fork, code, raise pull request, suggest improvements on GitHub. 
+
+
+**Features**
 1. Limit number of categories that appears.
+
 2. Exclude categories from display.
+
 3. Restrict levels of categories that can be shown.
+
 4. Display categories as list or dropdown.
+
 5. Hide categories that does not have any posts.
+
 6. Display/Hide number of posts available in categories.
+
+7. Display/Hide category description on hover in title attribute
+
 
 [youtube http://www.youtube.com/watch?v=hFwz-yDu710]
 
@@ -53,6 +66,12 @@ Check if you have entered the category id's and not the category names.
 3. Display categories with number of posts inside them
 
 == Changelog ==
+
+= 2.2 =
+* Enable/disable display of category description
+* Code formatting
+* Removed Deprecated Constructor Method - Thanks https://github.com/frozzare
+* Added sorting option by name, id, post count
 
 = 2.1.0 =
 * Ability to use more than 1 widget on same page with different parent categories
