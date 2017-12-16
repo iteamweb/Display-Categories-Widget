@@ -10,7 +10,7 @@ License: GPL
 class DisplayCategoriesWidget extends WP_Widget
 
 {
-    function DisplayCategoriesWidget()
+    function __construct()
     {
         $widget_ops = array(
             'classname' => 'DisplayCategoriesWidget',
