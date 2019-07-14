@@ -23,7 +23,20 @@ class DisplayCategoriesWidget extends WP_Widget
     {
         $instance = wp_parse_args((array)$instance, array(
             'title' => '',
-            'cat_id' => ''
+            'cat_id' => 0,
+						'category' => '',
+						'dcw_limit' => '',
+						'dcw_option_name' => '',
+						'dcw_exclude' => '',
+						'dcw_depth' => '',
+						'display_parent' => 0,
+						'display_empty_categories' => 0,
+						'showcount_value' => 0,
+						'use_desc_for_title' => 0,
+						'sort_order_by' => 'name',
+						'sort_order_as' => 'ASC',
+						'show_format' => 0,
+						'dcw_column' => '1'
         ));
         $title = $instance['title'];
         $category = $instance['category'];
@@ -198,20 +211,22 @@ n - Value of n (some number) specifies the depth (or level) to descend in displa
         extract($args, EXTR_SKIP);
         echo $before_widget;
         $title = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']);
-        $cat_id = $instance['category'];
-        $dcw_limit = $instance['dcw_limit'];
-        $dcw_option_name = $instance['dcw_option_name'];
-        $dcw_exclude = $instance['dcw_exclude'];
-        $dcw_depth = $instance['dcw_depth'];
-        $display_empty_categories = $instance['display_empty_categories'];
-        $showcount_value = $instance['showcount_value'];
-        $use_desc_for_title = $instance['use_desc_for_title'];
-        $sort_order_by = $instance['sort_order_by']; 
-        $sort_order_as = $instance['sort_order_as']; 
-        $show_format = $instance['show_format'];
-        $dcw_column = $instance['dcw_column'];
+        $cat_id = $instance['category'] ?? 0;
+        $dcw_limit = $instance['dcw_limit'] ?? 'Categories';
+        $dcw_option_name = $instance['dcw_option_name'] ?? '';
+        $dcw_exclude = $instance['dcw_exclude'] ?? '';
+        $dcw_depth = $instance['dcw_depth'] ?? 0;
+        $display_empty_categories = $instance['display_empty_categories'] ?? 0;
+        $showcount_value = $instance['showcount_value'] ?? 0;
+        $use_desc_for_title = $instance['use_desc_for_title'] ?? 0;
+        $sort_order_by = $instance['sort_order_by'] ?? 'name';
+        $sort_order_as = $instance['sort_order_as'] ?? 'ASC';
+        $show_format = $instance['show_format'] ?? 0;
+        $dcw_column = $instance['dcw_column'] ?? 1;
+				$dcw_display_parent = $instance['display_parent'] ?? 0;
+
         if (!empty($title)) echo $before_title . $title . $after_title;
-        if ($instance['display_parent'] == 1) {
+        if (  $dcw_display_parent == 1) {
             $yourcat = get_category($cat_id);
             if ($yourcat) echo '<h2>' . $yourcat->name . '</h2>';
         }
@@ -219,16 +234,16 @@ n - Value of n (some number) specifies the depth (or level) to descend in displa
         if ($cat_id == "BLANK") $cat_id = "0";
         if ($dcw_depth == "BLANK") $dcw_depth = "0";
         $dcw_incrementor = 1;
-        if ($instance['show_format'] == 0) {
+        if ($show_format == 0) {
             echo "<style>.dcw_c1 {float:left; width:100%} .dcw_c2 {float:left; width:50%} .dcw_c3 {float:left; width:33%}</style>";
             echo "<ul class='dcw'>";
             wp_list_categories('orderby='.$sort_order_by.'&order='.$sort_order_as.'&use_desc_for_title='.$use_desc_for_title.'&show_count=' . $showcount_value . '&child_of=' . $cat_id . '&hide_empty=' . $display_empty_categories . '&title_li=&number=' . $dcw_limit . '&exclude=' . $dcw_exclude . '&depth=' . $dcw_depth);
             echo "</ul>";
-            $class_definer = "dcw_c" . $instance['dcw_column'];
+            $class_definer = "dcw_c" . $dcw_column;
             echo "<script>jQuery('ul.dcw').find('li').addClass('$class_definer');</script>";
         }
 
-        if ($instance['show_format'] == 2) {
+        if ($show_format == 2) {
             $dcw_disp_widget_id = dcw_get_widget_id($this->id);
 ?>
     <form action="<?php
@@ -274,4 +289,4 @@ function dcw_get_widget_id($dcw_wid)
     return $dcw_process_id[1];
 }
 
-add_action('widgets_init', create_function('', 'return register_widget("DisplayCategoriesWidget");')); ?>
+add_action('widgets_init', function() {return register_widget("DisplayCategoriesWidget");}); ?>
