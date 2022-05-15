@@ -235,7 +235,7 @@ n - Value of n (some number) specifies the depth (or level) to descend in displa
         if ($dcw_depth == "BLANK") $dcw_depth = "0";
         $dcw_incrementor = 1;
         if ($show_format == 0) {
-            echo "<style>.dcw_c1 {float:left; width:100%} .dcw_c2 {float:left; width:50%} .dcw_c3 {float:left; width:33%}</style>";
+            echo "<style>.dcw {display:flex; flex-direction:row; flex-wrap:wrap;} .dcw_c1 {width:100%} .dcw_c2 {flex:0 0 50%} .dcw_c3 {flex:0 0 33.333333%}</style>";
             echo "<ul class='dcw'>";
             wp_list_categories('orderby='.$sort_order_by.'&order='.$sort_order_as.'&use_desc_for_title='.$use_desc_for_title.'&show_count=' . $showcount_value . '&child_of=' . $cat_id . '&hide_empty=' . $display_empty_categories . '&title_li=&number=' . $dcw_limit . '&exclude=' . $dcw_exclude . '&depth=' . $dcw_depth);
             echo "</ul>";
